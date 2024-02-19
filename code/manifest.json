@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "Pronounci Extension",
+    "version": "1.0",
+    "permissions": ["storage", "activeTab","contextMenus"],
+    "host_permissions": ["http://localhost/*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+       
+        "48": "icon48.png"
+        
+      }
+    },
+    "icons": {
+      
+      "48": "icon48.png"
+     
+    },
+    "content_scripts": [{
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }]
+
+
+  }
+  
