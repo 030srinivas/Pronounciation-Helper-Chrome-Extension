@@ -1,6 +1,4 @@
-// background.js
 
-// Listen for the onMessage event
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "scrapeWebsite") {
     // Handle the scrapeWebsite action
@@ -13,7 +11,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
-// Create context menu on extension install
+
 chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
     title: "Quick Pronunciation Search",
