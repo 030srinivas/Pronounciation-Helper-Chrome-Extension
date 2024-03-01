@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
       wordList.push(wordData);
 
       // Remove words older than 5 hours
-      wordList = wordList.filter(item => (currentTime - item.timestamp) <= 5 * 60 * 60 * 1000);
+      // wordList = wordList.filter(item => (currentTime - item.timestamp) <= 5 * 60 * 60 * 1000);
 
       // Save the updated word list to local storage
       chrome.storage.local.set({ 'wordList': wordList }, function () {
@@ -57,7 +57,25 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
+//from here shreeshau -3
+  //till here -3
 });
 
+// from here -3
+document.addEventListener('DOMContentLoaded', function() {
+  chrome.storage.local.get('reviewList', function(data) {
+    const reviewList = data.reviewList || [];
+    const uniqueWords = new Set(reviewList); // Use a Set to store unique words
+    const reviewListElement = document.getElementById('reviewList');
+    reviewListElement.innerHTML = ''; // Clear existing content
+    uniqueWords.forEach(function(word) {
+      const li = document.createElement('li');
+      li.textContent = word;
+      reviewListElement.appendChild(li);
+    });
+  });
+});
+
+//till here -3
 
 

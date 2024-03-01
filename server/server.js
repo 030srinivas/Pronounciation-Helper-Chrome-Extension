@@ -7,7 +7,19 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+//from here shreesha -1
+// mongoose.connect('mongodb://localhost/wordDatabase', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
+// const WordSchema = new mongoose.Schema({
+//   word1: String
+// });
+// const WordModel = mongoose.model('Word', WordSchema);
 
+// app.use(bodyParser.json());
+
+//till here -1
 app.get('/scrape', async (req, res) => {
   try {
     const url = req.query.url; // Extract the URL parameter from the request query
@@ -53,6 +65,22 @@ app.get('/scrape', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+//from here shreesha -2
+// app.post('/storeWord', async (req, res) => {
+//   const { word1 } = req.body;
+
+//   try {
+//     // Create a new document with the provided word
+//     const newWord = new WordModel({ word1 });
+//     await newWord.save();
+//     res.status(200).json({ message: 'Word stored successfully in MongoDB' });
+//   } catch (error) {
+//     console.error('Error storing word in MongoDB:', error);
+//     res.status(500).json({ error: 'Failed to store word in MongoDB' });
+//   }
+// });
+// till here -2
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
