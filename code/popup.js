@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
       // Add the word data to the list
       wordList.push(wordData);
 
-      // Remove words older than 5 hours
-      wordList = wordList.filter(item => (currentTime - item.timestamp) <= 5 * 60 * 60 * 1000);
+  
+     
 
       // Save the updated word list to local storage
       chrome.storage.local.set({ 'wordList': wordList }, function () {
