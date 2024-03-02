@@ -18,6 +18,12 @@ chrome.runtime.onInstalled.addListener(function () {
     contexts: ["selection"],
     id: "searchGoogle"
   });
+
+  chrome.contextMenus.create({
+    title: "Pronunciation",
+    contexts: ["selection"],
+    id: "pronounceWord"
+  });
 });
 
 // Handle context menu click
@@ -27,6 +33,14 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 
   if (info.menuItemId === "searchGoogle") {
     searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(selectedText + " pronunciation");
+  }
+
+  if (info.menuItemId === "pronounceWord") {
+    // Send a message to content script to handle pronunciation
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { action: "pronounceWord", selectedText: selectedText });
+    });
+    return;
   }
 
   if (searchUrl) {
@@ -39,9 +53,3 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
     });
   }
 });
-
-// No need to inject a script here; content script will handle it
-
-
-
-
