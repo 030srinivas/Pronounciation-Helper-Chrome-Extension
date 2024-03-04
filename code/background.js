@@ -1,4 +1,3 @@
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "scrapeWebsite") {
     // Handle the scrapeWebsite action
@@ -33,7 +32,7 @@ chrome.runtime.onInstalled.addListener(function () {
 //till here-1
 
 });
-//from here -4
+
 function storeSelectedText(selectedText) {
   chrome.storage.local.get('reviewList', function(data) {
     const reviewList = data.reviewList || [];
@@ -43,7 +42,6 @@ function storeSelectedText(selectedText) {
     });
   });
 }
-//till here -4
 // Handle context menu click
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
   var selectedText = info.selectionText.trim();

@@ -6,11 +6,17 @@
   <title>Scraped Data</title>
   <style>
     body{
-      width: 300px;
+      width: 410px;
       background-color:black;
       color: white;
       font-size:18px;
       font-family: 'Times New Roman', Times, serif;
+      border: 2px solid white;
+      border-radius: 0.5%;
+    }
+    .main{
+      display: flex;
+      padding: 4px;
     }
     #data-container{
       width: 200px;
@@ -22,13 +28,29 @@
       padding: 10px;
       color: black;
     }
+   li{
+    margin-bottom: 10px; 
+      background-color: aquamarine;
+      border-radius:10%;
+      padding: 10px;
+      color: black;
+      margin-right: 5px;
+      list-style: none;
+   }
+  
   </style>
 </head>
 <body>
+  <div class="main">
+  <div class="container">
   <h3>Commonly Misspelled Words</h3>
   <div id="data-container"></div>
-  <h3>Added to Review</h3>
+</div>
+<div class="container1">
+  <h3>Added To Review</h3>
   <div id="reviewList"></div>
+</div>
+</div>
   <script src="popup.js"></script>
 </body>
 </html>
