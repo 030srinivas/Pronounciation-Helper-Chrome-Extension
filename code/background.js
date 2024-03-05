@@ -13,7 +13,6 @@
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "scrapeWebsite") {
-    // Handle the scrapeWebsite action
     fetch('http://localhost:3000/scrape?url=' + encodeURIComponent(request.url))
       .then(response => response.json())
       .then(data => {
@@ -57,7 +56,6 @@ chrome.runtime.onInstalled.addListener(function () {
   //   contexts: ["selection"],
   //   id: "pronounceWord"
   // });
-// new add by shreesha from here -1
    chrome.contextMenus.create({
     title: "Add to review",
     contexts: ["selection"],
@@ -74,7 +72,7 @@ function storeSelectedText(selectedText) {
           console.log('Selected text stored in local storage:', selectedText);
           setTimeout(function() {
               deleteStoredText(selectedText); // Check if deleteStoredText is defined
-          }, 30 * 1000); // 30 seconds
+          }, 30 * 1000); 
       });
   });
 }
@@ -87,16 +85,6 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
   if (info.menuItemId === "searchGoogle") {
     searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(selectedText + " pronunciation");
   }
-
-  
-  // if (info.menuItemId === "pronounceWord") {
-  //   // Send a message to content script to handle pronunciation
-  //   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-  //     chrome.tabs.sendMessage(tabs[0].id, { action: "pronounceWord", selectedText: selectedText });
-  //   });
-  //   return;
-  // }
-  // by shreesha from here -2
   if (info.menuItemId === 'addToReview' && info.selectionText) {
     storeSelectedText(info.selectionText);
   }
