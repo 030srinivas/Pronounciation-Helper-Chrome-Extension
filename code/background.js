@@ -23,25 +23,27 @@ chrome.runtime.onInstalled.addListener(function () {
   //   contexts: ["selection"],
   //   id: "pronounceWord"
   // });
-// new add by shreesha from here -1
    chrome.contextMenus.create({
     title: "Add to review",
     contexts: ["selection"],
     id: "addToReview"
   });
-//till here-1
 
 });
 
 function storeSelectedText(selectedText) {
   chrome.storage.local.get('reviewList', function(data) {
-    const reviewList = data.reviewList || [];
-    reviewList.push(selectedText);
-    chrome.storage.local.set({ 'reviewList': reviewList }, function() {
-      console.log('Selected text stored in local storage:', selectedText);
-    });
+      const reviewList = data.reviewList || [];
+      reviewList.push(selectedText);
+      chrome.storage.local.set({ 'reviewList': reviewList }, function() {
+          console.log('Selected text stored in local storage:', selectedText);
+          setTimeout(function() {
+              deleteStoredText(selectedText); // Check if deleteStoredText is defined
+          }, 30 * 1000); // 30 seconds
+      });
   });
 }
+
 // Handle context menu click
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
   var selectedText = info.selectionText.trim();
@@ -59,7 +61,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
   //   });
   //   return;
   // }
-  // by shreesha from here -2
+
   if (info.menuItemId === 'addToReview' && info.selectionText) {
     storeSelectedText(info.selectionText);
   }

@@ -49,7 +49,7 @@ app.get('/scrape', async (req, res) => {
         console.log('URL:', url);
 
         // Fetch the list of words from the provided API
-        const apiResponse = await axios.get('https://030srinivas.github.io/Misspelledwords-api/words.json');
+        const apiResponse = await axios.get('https://030srinivas.github.io/api/words.json');
         console.log('API Response:', apiResponse.data); // Log the entire API response
         const apiWords = apiResponse.data && Array.isArray(apiResponse.data) ? apiResponse.data : [];
 
