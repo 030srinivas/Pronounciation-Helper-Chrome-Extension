@@ -1,14 +1,48 @@
+// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+//   if (request.action === "scrapeWebsite") {
+//     // Handle the scrapeWebsite action
+//     fetch('http://localhost:3000/scrape?url=' + encodeURIComponent(request.url))
+//       .then(response => response.json())
+//       .then(data => {
+//         chrome.storage.local.set({ 'scrapedData': data.matchedWords });
+//       })
+//       .catch(error => console.error('Error scraping website:', error));
+//   }
+// });
+
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "scrapeWebsite") {
     // Handle the scrapeWebsite action
     fetch('http://localhost:3000/scrape?url=' + encodeURIComponent(request.url))
       .then(response => response.json())
       .then(data => {
-        chrome.storage.local.set({ 'scrapedData': data.matchedWords });
+        // Get existing scraped data
+        chrome.storage.local.get('scrapedData', function(existingData) {
+          let storedWords = existingData.scrapedData || [];
+          // Add new words from the current website, avoiding repetition
+          data.matchedWords.forEach(word => {
+            if (!storedWords.includes(word)) {
+              storedWords.push(word);
+            }
+          });
+          // Update the scrapedData in local storage
+          chrome.storage.local.set({ 'scrapedData': storedWords }, function() {
+            console.log('Scraped data updated:', storedWords);
+          });
+          // Set a timeout to delete the stored words after 10 seconds
+          setTimeout(function () {
+            chrome.storage.local.remove('scrapedData', function () {
+              console.log('Stored words deleted after 100 seconds');
+            });
+          }, 100 * 1000);
+        });
       })
       .catch(error => console.error('Error scraping website:', error));
   }
 });
+
+// Rest of your existing code remains unchanged
 
 
 chrome.runtime.onInstalled.addListener(function () {
@@ -23,6 +57,7 @@ chrome.runtime.onInstalled.addListener(function () {
   //   contexts: ["selection"],
   //   id: "pronounceWord"
   // });
+// new add by shreesha from here -1
    chrome.contextMenus.create({
     title: "Add to review",
     contexts: ["selection"],
@@ -61,7 +96,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
   //   });
   //   return;
   // }
-
+  // by shreesha from here -2
   if (info.menuItemId === 'addToReview' && info.selectionText) {
     storeSelectedText(info.selectionText);
   }
